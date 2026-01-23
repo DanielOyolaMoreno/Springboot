@@ -1,4 +1,4 @@
-package hola.mundo.hola_mundo.Controladores;
+package hola.mundo.hola_mundo.controladores;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
