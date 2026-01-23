@@ -228,7 +228,7 @@ The following profiles are active: mock
         ├─→ Construye RestClient
         ├─→ Hace GET /api/random
         ├─→ Jackson mapea JSON → Quote
-        └─→ log.info(quote)
+        └─→ log.info(respuesta)
     
 6️⃣  APLICACIÓN LISTA 
     │
@@ -268,7 +268,7 @@ hola_mundo/
 │   │   │           │   └── 🔶 DTO principal (type + value)
 │   │   │           │
 │   │   │           └── 📄 Value.java
-│   │   │               └── 🔶 DTO embebido (id + quote)
+│   │   │               └── 🔶 DTO embebido (id + respuesta)
 │   │   │
 │   │   └── 📂 resources/
 │   │       ├── 📄 application.properties
@@ -314,7 +314,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
 import org.springframework.web.client.RestClient;
-import hola.mundo.hola_mundo.dto.Quote;
+import hola.mundo.hola_mundo.dto.Respuesta;
 
 @SpringBootApplication
 public class HolaMundoApplication {
@@ -380,16 +380,16 @@ public class HolaMundoApplication {
             // ─────────────────────────────────────────────
             //   PASO 2: Realizar petición GET
             // ─────────────────────────────────────────────
-            Quote quote = restClient
+            Respuesta respuesta = restClient
                     .get()                    // Tipo de petición
                     .uri("/api/random")       // Endpoint
                     .retrieve()               // Ejecutar
-                    .body(Quote.class);       // Mapear a Quote
+                    .body(Respuesta.class);       // Mapear a Quote
 
             // ─────────────────────────────────────────────
             //   PASO 3: Registrar resultado
             // ─────────────────────────────────────────────
-            Sistem.out.printls("Cita recibida: {}", quote);
+            Sistem.out.printls("Cita recibida: {}", respuesta);
         };
     }
 }
@@ -402,10 +402,11 @@ public class HolaMundoApplication {
 ```java
 package hola.mundo.hola_mundo.controladores;
 
+import hola.mundo.hola_mundo.dto.Valor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import hola.mundo.hola_mundo.dto.Quote;
-import hola.mundo.hola_mundo.dto.Value;
+import hola.mundo.hola_mundo.dto.Respuesta;
+import hola.mundo.hola_mundo.dto.Valor;
 
 /**
  * 🔶 CONTROLADOR MOCK LOCAL
@@ -434,14 +435,14 @@ public class ApiRandomController {
      *     "type": "success",
      *     "value": {
      *       "id": 10,
-     *       "quote": "Really loving Spring Boot..."
+     *       "respuesta": "Really loving Spring Boot..."
      *     }
      *   }
      */
     @GetMapping("/api/random")
-    public Quote randomQuote() {
+    public Respuesta randomQuote() {
         int id = new Random().nextInt(100);
-        return new Quote("success", new Value(id, "Really loving Spring Boot, makes stand alone Spring apps easy."));
+        return new Respuesta("success", new Valor(id, "Really loving Spring Boot, makes stand alone Spring apps easy."));
     }
 }
 ```
@@ -470,7 +471,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  *   - Evita errores si el JSON tiene campos extra
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public record Quote(String type, Value value) {
+public record Quote(String type, Valor valor) {
 }
 ```
 
@@ -489,11 +490,11 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  * Mapea la cita dentro del JSON:
  *   "value": {
  *     "id": 10,
- *     "quote": "Really loving Spring Boot..."
+ *     "respuesta": "Really loving Spring Boot..."
  *   }
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public record Value(Integer id, String quote) {
+public record Value(Integer id, String respuesta) {
 }
 ```
 
@@ -506,7 +507,7 @@ public record Value(Integer id, String quote) {
   "type": "success",
   "value": {
     "id": 10,
-    "quote": "Really loving Spring Boot, makes stand alone Spring apps easy."
+    "respuesta": "Really loving Spring Boot, makes stand alone Spring apps easy."
   }
 }
 ```
@@ -536,7 +537,7 @@ cd ./hola_mundo
 
 **Log esperado en consola:**
 ```
-Quote[type=success, value=Value[id=81, quote=Really loving Spring Boot, makes stand alone Spring apps easy.]]
+Quote[type=success, value=Value[id=81, respuesta=Really loving Spring Boot, makes stand alone Spring apps easy.]]
 ```
 
 ---

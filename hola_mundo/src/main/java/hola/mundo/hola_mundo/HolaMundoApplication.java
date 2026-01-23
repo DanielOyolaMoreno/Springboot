@@ -7,12 +7,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
 import org.springframework.web.client.RestClient;
 
-import hola.mundo.hola_mundo.dto.Quote;
+import hola.mundo.hola_mundo.dto.Respuesta;
 
 @SpringBootApplication
 public class HolaMundoApplication {
 
     public static void main(String[] args) {
+
         SpringApplication.run(HolaMundoApplication.class, args);
     }
 
@@ -27,11 +28,11 @@ public class HolaMundoApplication {
         RestClient restClient = builder.baseUrl("http://localhost:8080").build();
         return args -> {
             try {
-                Quote quote = restClient
+                Respuesta respuesta = restClient
                         .get().uri("/api/random")
                         .retrieve()
-                        .body(Quote.class);
-                System.out.println((quote.toString()));
+                        .body(Respuesta.class);
+                System.out.println((respuesta.toString()));
             } catch (Exception e) {
                 System.err.println(("No se pudo obtener la cita desde http://localhost:8080/api/random: {}" + e.toString()));
             }
