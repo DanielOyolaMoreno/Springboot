@@ -1,4 +1,4 @@
-package hola.mundo.hola_mundo.dto;
+package main.clase_daniel.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

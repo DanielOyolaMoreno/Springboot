@@ -1,12 +1,12 @@
-package hola.mundo.hola_mundo.controladores;
+package main.clase_abel.controladores;
 
 import java.util.concurrent.atomic.AtomicLong;
 
+import main.clase_abel.dto.Greeting;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import hola.mundo.hola_mundo.dto.Saludo;
 
 @RestController
 public class SaludoControlador {
@@ -15,8 +15,8 @@ public class SaludoControlador {
   private final AtomicLong counter = new AtomicLong();
 
   @GetMapping("/greeting")
-  public Saludo greeting(@RequestParam(defaultValue = "Mundo") String nombre) {
-    return new Saludo(counter.incrementAndGet(), String.format(template, nombre));
+  public Greeting greeting(@RequestParam(defaultValue = "Mundo") String nombre) {
+    return new Greeting(counter.incrementAndGet(), String.format(template, nombre));
   }
 
 }

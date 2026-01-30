@@ -1,11 +1,9 @@
-package hola.mundo.hola_mundo.controladores;
+package main.clase_daniel.controladores;
 
-import hola.mundo.hola_mundo.dto.Respuesta;
+import main.clase_daniel.dto.Respuesta;
+import main.clase_daniel.dto.Valor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import hola.mundo.hola_mundo.dto.Valor;
-
 import java.util.Random;
 
 @RestController
